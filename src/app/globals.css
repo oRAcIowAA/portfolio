@@ -63,8 +63,15 @@
 
 html {
   scroll-behavior: smooth;
+  /* Fix mobile Safari 100vh bug — use small viewport height as base */
+  height: 100%;
 }
 
+body {
+  min-height: 100%;
+  /* Modern browsers: use dynamic viewport height */
+  min-height: 100dvh;
+}
 body {
   background-color: var(--bg-color);
   color: var(--text-primary);
@@ -72,6 +79,10 @@ body {
   overflow-x: hidden;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Prevent text size adjustments on orientation change (iOS) */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* Smooth Transitions for Theme Swapping */
@@ -104,6 +115,16 @@ button {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
+}
+
+/* Firefox / older browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass {
+    background: rgba(15, 17, 32, 0.92);
+  }
+  :root.light .glass {
+    background: rgba(255, 255, 255, 0.97);
+  }
 }
 
 .glass-card {
@@ -239,3 +260,19 @@ button {
 .bg-gradient-radial {
   background-image: radial-gradient(var(--tw-gradient-stops));
 }
+
+/* ─── Reduced Motion (Accessibility) ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Safe area insets for iPhone notch / Dynamic Island ─────────────── */
+.safe-top    { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
