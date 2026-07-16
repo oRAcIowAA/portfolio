@@ -152,7 +152,7 @@ export default function Contact() {
               </div>
               <div>
                 <p className="text-xs text-text-muted font-medium uppercase tracking-wider mb-1">Location</p>
-                <p className="text-text-primary font-medium">Bagumbayan Sur, Naga City, PH 🇵🇭</p>
+                <p className="text-text-primary font-medium">Bagumbayan Sur, Naga City, PH</p>
                 <p className="text-xs text-text-muted mt-0.5">Open to local and remote opportunities</p>
               </div>
             </div>

@@ -108,7 +108,7 @@ export default function About() {
 
             {/* Info cards */}
             <div className="grid grid-cols-2 gap-3 mt-8">
-              <InfoCard icon={<MapPin size={18} />} label="Location" value="Naga City, PH 🇵🇭" />
+              <InfoCard icon={<MapPin size={18} />} label="Location" value="Naga City, PH" />
               <InfoCard icon={<Coffee size={18} />} label="Status" value="Open to Work" />
               <InfoCard icon={<Zap size={18} />} label="Focus" value="Web, Mobile & IT" />
               <InfoCard icon={<User size={18} />} label="Experience" value="OJT / Freelance" />
