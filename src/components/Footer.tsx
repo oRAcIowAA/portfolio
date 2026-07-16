@@ -21,7 +21,7 @@ const FacebookIcon = (props: { size?: number; className?: string }) => (
 const socialLinks = [
   { href: "https://www.facebook.com/oc.robas", icon: FacebookIcon, label: "Facebook" },
   { href: "https://github.com/oRAcIowAA", icon: GitFork, label: "GitHub" },
-  { href: "https://linkedin.com/in/oraciowaa", icon: LinkIcon, label: "LinkedIn" },
+  { href: "https://www.linkedin.com/in/owen-christian-robas-0159b2297/", icon: LinkIcon, label: "LinkedIn" },
   { href: "https://mail.google.com/mail/?view=cm&fs=1&to=robasowen@gmail.com&su=Inquiry%20from%20Portfolio&body=Hi%20Owen,%0D%0A%0D%0AI%20visited%20your%20portfolio%20and%20would%20like%20to%20connect%20with%20you%20regarding...", icon: Mail, label: "Email" },
 ];
 

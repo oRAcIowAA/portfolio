@@ -46,7 +46,7 @@ const socialLinks = [
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/oraciowaa",
+    href: "https://www.linkedin.com/in/owen-christian-robas-0159b2297/",
     icon: LinkIcon,
     color: "#4f72ff",
     hoverColor: "hover:text-[#4f72ff]",
@@ -301,6 +301,14 @@ export default function Contact() {
                       <span>Failed to send. Please email me directly.</span>
                     </div>
                   )}
+
+                  {/* Warning disclaimer banner */}
+                  <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-start gap-2.5 text-xs text-amber-500 leading-relaxed">
+                    <AlertCircle size={15} className="flex-shrink-0 mt-0.5" />
+                    <span>
+                      <strong>Notice:</strong> This form is for visual presentation only and is not connected to any external database or API due to spam prevention and resource costs. If you want to send a message, please email me directly using the contact details on the left.
+                    </span>
+                  </div>
 
                   <button
                     id="contact-submit"
