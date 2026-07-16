@@ -69,7 +69,7 @@ export default function Navbar() {
             <Terminal size={16} className="text-white" />
           </div>
           <span className="font-mono font-semibold text-text-primary">
-            owenrobas<span className="text-[#4f72ff]">.dev</span>
+            oc-robas<span className="text-[#4f72ff]">.dev</span>
           </span>
         </Link>
 
