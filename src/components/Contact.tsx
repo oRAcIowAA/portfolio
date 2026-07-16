@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   Mail,
   Link as LinkIcon,
@@ -68,6 +68,16 @@ export default function Contact() {
 
   const [formState, setFormState] = useState<FormState>("idle");
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [emailHref, setEmailHref] = useState(
+    "mailto:robasowen@gmail.com?subject=Inquiry%20from%20Portfolio&body=Hi%20Owen,%0D%0A%0D%0AI%20visited%20your%20portfolio%20and%20would%20like%20to%20connect%20with%20you%20regarding..."
+  );
+
+  useEffect(() => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (!isMobile) {
+      setEmailHref("https://mail.google.com/mail/?view=cm&fs=1&to=robasowen@gmail.com&su=Inquiry%20from%20Portfolio&body=Hi%20Owen,%0D%0A%0D%0AI%20visited%20your%20portfolio%20and%20would%20like%20to%20connect%20with%20you%20regarding...");
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,8 +146,8 @@ export default function Contact() {
               <div>
                 <p className="text-xs text-text-muted font-medium uppercase tracking-wider mb-1">Email</p>
                 <a
-                  href="https://mail.google.com/mail/?view=cm&fs=1&to=robasowen@gmail.com&su=Inquiry%20from%20Portfolio&body=Hi%20Owen,%0D%0A%0D%0AI%20visited%20your%20portfolio%20and%20would%20like%20to%20connect%20with%20you%20regarding..."
-                  target="_blank"
+                  href={emailHref}
+                  target={emailHref.startsWith("mailto") ? undefined : "_blank"}
                   rel="noopener noreferrer"
                   className="text-text-primary hover:text-[#4f72ff] transition-colors font-medium"
                 >
@@ -181,11 +191,13 @@ export default function Contact() {
               <div className="flex items-center gap-4">
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
+                  const isEmail = social.label === "Email";
+                  const href = isEmail ? emailHref : social.href;
                   return (
                     <a
                       key={social.label}
-                      href={social.href}
-                      target={social.href.startsWith("mailto") ? undefined : "_blank"}
+                      href={href}
+                      target={href.startsWith("mailto") ? undefined : "_blank"}
                       rel="noopener noreferrer"
                       id={`social-${social.label.toLowerCase().replace("/", "-")}`}
                       title={social.label}

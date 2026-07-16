@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { GitFork, Link as LinkIcon, Mail, Terminal } from "lucide-react";
 
 const FacebookIcon = (props: { size?: number; className?: string }) => (
@@ -34,6 +35,17 @@ const quickLinks = [
 
 export default function Footer() {
   const year = new Date().getFullYear();
+
+  const [emailHref, setEmailHref] = useState(
+    "mailto:robasowen@gmail.com?subject=Inquiry%20from%20Portfolio&body=Hi%20Owen,%0D%0A%0D%0AI%20visited%20your%20portfolio%20and%20would%20like%20to%20connect%20with%20you%20regarding..."
+  );
+
+  useEffect(() => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (!isMobile) {
+      setEmailHref("https://mail.google.com/mail/?view=cm&fs=1&to=robasowen@gmail.com&su=Inquiry%20from%20Portfolio&body=Hi%20Owen,%0D%0A%0D%0AI%20visited%20your%20portfolio%20and%20would%20like%20to%20connect%20with%20you%20regarding...");
+    }
+  }, []);
 
   return (
     <footer className="relative border-t border-border/60 overflow-hidden">
@@ -85,11 +97,13 @@ export default function Footer() {
             <div className="flex flex-col gap-3">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
+                const isEmail = social.label === "Email";
+                const href = isEmail ? emailHref : social.href;
                 return (
                   <a
                     key={social.label}
-                    href={social.href}
-                    target={social.href.startsWith("mailto") ? undefined : "_blank"}
+                    href={href}
+                    target={href.startsWith("mailto") ? undefined : "_blank"}
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-sm text-text-muted hover:text-[#4f72ff] transition-colors w-fit"
                   >
