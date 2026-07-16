@@ -51,6 +51,26 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsOpen(false);
+
+    const targetId = href.replace("#", "");
+    const element = document.getElementById(targetId);
+    if (element) {
+      window.history.pushState(null, "", href);
+      
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <motion.nav
       initial={{ y: -80, opacity: 0 }}
@@ -79,6 +99,7 @@ export default function Navbar() {
             <a
               key={link.label}
               href={link.href}
+              onClick={(e) => scrollToSection(e, link.href)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                 activeSection === link.href.slice(1)
                   ? "text-[#4f72ff] bg-[#4f72ff]/10"
@@ -98,6 +119,7 @@ export default function Navbar() {
           <div className="hidden md:block">
             <a
               href="#contact"
+              onClick={(e) => scrollToSection(e, "#contact")}
               className="btn-primary text-sm"
               id="nav-contact-btn"
             >
@@ -129,7 +151,7 @@ export default function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              onClick={() => setIsOpen(false)}
+              onClick={(e) => scrollToSection(e, link.href)}
               className="px-4 py-3 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-surface-2 transition-all"
             >
               {link.label}
@@ -138,7 +160,7 @@ export default function Navbar() {
           <a
             href="#contact"
             className="btn-primary text-sm text-center mt-2 w-full"
-            onClick={() => setIsOpen(false)}
+            onClick={(e) => scrollToSection(e, "#contact")}
           >
             Let&apos;s Talk
           </a>
