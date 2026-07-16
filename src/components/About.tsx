@@ -37,8 +37,8 @@ function InfoCard({ icon, label, value }: CardProps) {
         {icon}
       </div>
       <div>
-        <p className="text-xs text-[#4a5568] font-medium uppercase tracking-wider">{label}</p>
-        <p className="text-sm text-[#e2e8f0] font-medium">{value}</p>
+        <p className="text-xs text-text-muted font-medium uppercase tracking-wider">{label}</p>
+        <p className="text-sm text-text-primary font-medium">{value}</p>
       </div>
     </div>
   );
@@ -62,17 +62,17 @@ export default function About() {
           className="flex items-center gap-3 mb-4"
         >
           <span className="font-mono text-[#4f72ff] text-sm">01.</span>
-          <span className="text-sm font-medium text-[#4a5568] uppercase tracking-widest">
+          <span className="text-sm font-medium text-text-muted uppercase tracking-widest">
             About Me
           </span>
-          <div className="flex-1 h-px bg-gradient-to-r from-[#1e2235] to-transparent" />
+          <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
         </motion.div>
 
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="section-heading text-white mb-12"
+          className="section-heading text-text-primary mb-12"
         >
           Crafting digital{" "}
           <span className="gradient-text">experiences</span>
@@ -85,10 +85,10 @@ export default function About() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="space-y-5 text-[#8892a4] leading-relaxed">
+            <div className="space-y-5 text-text-secondary leading-relaxed">
               <p className="text-lg">
                 I&apos;m a passionate{" "}
-                <span className="text-[#e2e8f0] font-medium">
+                <span className="text-text-primary font-medium">
                   IT Graduate & Developer
                 </span>{" "}
                 who specializes in building database systems and full-stack applications. I have solid experience designing and launching web and mobile systems during my on-the-job training (OJT) and freelance work.
@@ -102,7 +102,7 @@ export default function About() {
               </p>
               <p>
                 Beyond software engineering, I have a strong foundation in IT systems administration, including{" "}
-                <span className="text-[#e2e8f0] font-medium">network configuration</span> (IP troubleshooting, cabling), system diagnostic administration, and hardware maintenance.
+                <span className="text-text-primary font-medium">network configuration</span> (IP troubleshooting, cabling), system diagnostic administration, and hardware maintenance.
               </p>
             </div>
 
@@ -124,8 +124,8 @@ export default function About() {
           >
             {/* Avatar placeholder */}
             <div className="relative">
-              <div className="w-64 h-64 rounded-3xl bg-gradient-to-br from-[#4f72ff]/20 to-[#8b5cf6]/20 border border-[#4f72ff]/20 flex items-center justify-center text-8xl shadow-[0_0_60px_rgba(79,114,255,0.15)] relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#4f72ff]/10 to-[#8b5cf6]/10" />
+              <div className="w-64 h-64 rounded-3xl bg-gradient-to-br from-[#4f72ff]/10 to-[#8b5cf6]/10 border border-border flex items-center justify-center text-8xl shadow-lg relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#4f72ff]/5 to-[#8b5cf6]/5" />
                 <span className="relative z-10">👨‍💻</span>
               </div>
               {/* Floating badge */}
@@ -161,15 +161,15 @@ export default function About() {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="mt-20"
         >
-          <p className="text-center text-xs font-mono text-[#4a5568] uppercase tracking-widest mb-6">
+          <p className="text-center text-xs font-mono text-text-muted uppercase tracking-widest mb-6">
             Tech Stack & Tools
           </p>
 
           {/* Marquee */}
           <div className="marquee-container relative">
             {/* Fade edges */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#090b13] to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#090b13] to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
             <div className="marquee-track gap-4 py-2">
               {marqueeItems.map((tech, i) => (

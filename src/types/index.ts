@@ -16,6 +16,8 @@ export interface GitHubRepo {
   created_at: string;
   open_issues_count: number;
   visibility: string;
+  paperUrl?: string;
+  screenshots?: string[];
 }
 
 // ─── Component Prop Types ────────────────────────────────────────────────────

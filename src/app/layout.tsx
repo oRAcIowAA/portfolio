@@ -2,20 +2,23 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "oRAcIowAA | Software Engineer & Full-Stack Developer",
+  title: "Owen Christian T. Robas | Full-Stack Developer & IT Engineer",
   description:
-    "Portfolio of oRAcIowAA — a software engineer specializing in backend architecture, full-stack development, and scalable systems. Explore my projects and experience.",
+    "Portfolio of Owen Christian T. Robas — a full-stack developer and IT systems administrator specializing in robust backend systems, database management, and network infrastructure.",
   keywords: [
+    "Owen Christian T. Robas",
     "software engineer",
     "full-stack developer",
-    "backend",
+    "IT administrator",
+    "PHP",
+    "Laravel",
+    "Flutter",
     "Next.js",
-    "TypeScript",
     "portfolio",
   ],
   openGraph: {
-    title: "oRAcIowAA | Software Engineer",
-    description: "Building robust systems and scalable software.",
+    title: "Owen Christian T. Robas | Full-Stack Developer",
+    description: "Building reliable software systems and IT infrastructures.",
     type: "website",
   },
 };
@@ -26,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -37,6 +40,19 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
           rel="stylesheet"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+                  document.documentElement.classList.add('light');
+                } else {
+                  document.documentElement.classList.add('dark');
+                }
+              } catch (_) {}
+            `,
+          }}
         />
       </head>
       <body className="antialiased">{children}</body>

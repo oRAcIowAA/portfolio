@@ -51,8 +51,9 @@ function AnimatedBackground() {
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw grid
-      ctx.strokeStyle = "rgba(79,114,255,0.04)";
+      // Draw grid - dynamically colorized based on dark or light mode
+      const isLight = document.documentElement.classList.contains("light");
+      ctx.strokeStyle = isLight ? "rgba(79,114,255,0.06)" : "rgba(79,114,255,0.04)";
       ctx.lineWidth = 1;
       const gridSize = 64;
       for (let x = 0; x <= canvas.width; x += gridSize) {
@@ -104,9 +105,16 @@ function AnimatedBackground() {
 
     draw();
 
+    // Listen for theme change events to redraw grid correctly
+    const observer = new MutationObserver(() => {
+      // Trigger canvas redraw
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
+      observer.disconnect();
     };
   }, []);
 
@@ -133,13 +141,13 @@ function FloatingCode() {
       initial={{ opacity: 0, x: 60 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.8, delay: 0.8 }}
-      className="hidden xl:block absolute right-12 top-1/2 -translate-y-1/2 glass-card rounded-2xl p-5 font-mono text-sm w-80"
+      className="hidden xl:block absolute right-12 top-1/2 -translate-y-1/2 glass-card rounded-2xl p-5 font-mono text-sm w-80 shadow-2xl"
     >
       <div className="flex items-center gap-2 mb-4">
         <div className="w-3 h-3 rounded-full bg-red-500/70" />
         <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
         <div className="w-3 h-3 rounded-full bg-green-500/70" />
-        <span className="ml-2 text-[#4a5568] text-xs">portfolio.ts</span>
+        <span className="ml-2 text-text-muted text-xs">portfolio.ts</span>
       </div>
       {codeLines.map((line, i) => (
         <motion.p
@@ -147,17 +155,17 @@ function FloatingCode() {
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 1 + i * 0.1 }}
-          className="text-[#8892a4] leading-7"
+          className="text-text-secondary leading-7"
         >
           {line.includes('"') ? (
             <>
-              <span className="text-[#8892a4]">{line.split('"')[0]}</span>
+              <span className="text-text-secondary">{line.split('"')[0]}</span>
               {line.split('"').slice(1).map((part, j) => (
                 <span key={j}>
                   {j % 2 === 0 ? (
                     <span className="text-[#10b981]">&quot;{part}&quot;</span>
                   ) : (
-                    <span className="text-[#8892a4]">{part}</span>
+                    <span className="text-text-secondary">{part}</span>
                   )}
                 </span>
               ))}
@@ -168,8 +176,8 @@ function FloatingCode() {
                 line.startsWith("const")
                   ? "text-[#4f72ff]"
                   : line === "};"
-                  ? "text-[#8892a4]"
-                  : "text-[#8892a4]"
+                  ? "text-text-secondary"
+                  : "text-text-secondary"
               }
             >
               {line}
@@ -188,8 +196,8 @@ export default function Hero() {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-[#090b13]" />
-      <div className="absolute inset-0 bg-gradient-radial from-[rgba(79,114,255,0.12)] via-transparent to-transparent" style={{ backgroundPosition: "50% 0%", backgroundSize: "100% 60%" }} />
+      <div className="absolute inset-0 bg-background" />
+      <div className="absolute inset-0 bg-gradient-radial from-[rgba(79,114,255,0.08)] via-transparent to-transparent" style={{ backgroundPosition: "50% 0%", backgroundSize: "100% 60%" }} />
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#8b5cf6]/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#06b6d4]/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -220,14 +228,14 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight mb-6"
           >
-            <span className="text-white">Hi, I&apos;m </span>
+            <span className="text-text-primary">Hi, I&apos;m </span>
             <span className="gradient-text">Owen Christian</span>
-            <span className="block text-white mt-2">I build</span>
+            <span className="block text-text-primary mt-2">I build</span>
             <span className="block">
               <span className="gradient-text-emerald">reliable systems</span>
-              <span className="text-white"> &amp;</span>
+              <span className="text-text-primary"> &amp;</span>
             </span>
-            <span className="text-white">applications.</span>
+            <span className="text-text-primary">applications.</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -235,10 +243,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg text-[#8892a4] max-w-xl leading-relaxed mb-10"
+            className="text-lg text-text-secondary max-w-xl leading-relaxed mb-10"
           >
             I specialize in{" "}
-            <span className="text-[#e2e8f0] font-medium">
+            <span className="text-text-primary font-medium">
               PHP, Laravel, and Flutter
             </span>{" "}
             development, building database-driven applications and managing reliable IT and network infrastructures.
@@ -261,7 +269,7 @@ export default function Hero() {
             </a>
             <a
               href="/resume.pdf"
-              download
+              download="Owen_Robas_Resume.pdf"
               id="hero-download-resume"
               className="btn-secondary flex items-center gap-2"
             >
@@ -275,7 +283,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="flex flex-wrap items-center gap-8 mt-14 pt-8 border-t border-[#1e2235]/60"
+            className="flex flex-wrap items-center gap-8 mt-14 pt-8 border-t border-border/60"
           >
             {[
               { value: "1+", label: "Year of Experience" },
@@ -284,7 +292,7 @@ export default function Hero() {
             ].map((stat) => (
               <div key={stat.label}>
                 <p className="text-3xl font-bold gradient-text">{stat.value}</p>
-                <p className="text-sm text-[#4a5568] mt-1">{stat.label}</p>
+                <p className="text-sm text-text-muted mt-1">{stat.label}</p>
               </div>
             ))}
           </motion.div>
@@ -296,7 +304,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#4a5568]"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-text-muted"
       >
         <span className="text-xs font-medium tracking-widest uppercase">Scroll</span>
         <motion.div

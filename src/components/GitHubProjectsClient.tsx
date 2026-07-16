@@ -14,13 +14,13 @@ interface Props {
 function EmptyState({ username }: { username: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="w-20 h-20 rounded-2xl bg-[#1e2235] flex items-center justify-center mb-4">
-        <Inbox size={32} className="text-[#4a5568]" />
+      <div className="w-20 h-20 rounded-2xl bg-surface-2 flex items-center justify-center mb-4">
+        <Inbox size={32} className="text-text-muted" />
       </div>
-      <h3 className="text-lg font-semibold text-[#e2e8f0] mb-2">
+      <h3 className="text-lg font-semibold text-text-primary mb-2">
         No public repositories found
       </h3>
-      <p className="text-sm text-[#4a5568] max-w-sm">
+      <p className="text-sm text-text-muted max-w-sm">
         No repositories are available for{" "}
         <span className="text-[#4f72ff] font-mono">@{username}</span>.
       </p>
@@ -55,10 +55,10 @@ export default function GitHubProjectsClient({ repos, username }: Props) {
           className="flex items-center gap-3 mb-4"
         >
           <span className="font-mono text-[#4f72ff] text-sm">02.</span>
-          <span className="text-sm font-medium text-[#4a5568] uppercase tracking-widest">
+          <span className="text-sm font-medium text-text-muted uppercase tracking-widest">
             Systems &amp; Projects
           </span>
-          <div className="flex-1 h-px bg-gradient-to-r from-[#1e2235] to-transparent" />
+          <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
         </motion.div>
 
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
@@ -66,7 +66,7 @@ export default function GitHubProjectsClient({ repos, username }: Props) {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="section-heading text-white"
+            className="section-heading text-text-primary"
           >
             Things I&apos;ve{" "}
             <span className="gradient-text">Built</span>

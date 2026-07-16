@@ -11,8 +11,8 @@ const timelineData: TimelineItem[] = [
     title: "Bachelor of Science in Information Technology",
     company: "STI College - Naga",
     description:
-      "Focusing on software development, systems administration, database management, and network engineering. Developed 'FureverCare' (Veterinary Management and Pet Care System) as a capstone project.",
-    tags: ["Laravel", "MySQL", "Flutter", "Capston Project", "SMS Automation"],
+      "Focusing on software development, systems administration, database management, and network engineering. Developed 'FureverCare' (Veterinary Management and Pet Care System) and 'JumpQuest' as key capstone achievements.",
+    tags: ["Laravel", "MySQL", "Flutter", "Capstone Project", "SMS Automation", "Game Development"],
     type: "education",
   },
   {
@@ -90,8 +90,8 @@ export default function Experience() {
   return (
     <section id="experience" className="py-24 px-6 relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-[#0f1120]/40" />
-      <div className="absolute left-1/2 top-0 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-[#1e2235] to-transparent" />
+      <div className="absolute inset-0 bg-surface/40" />
+      <div className="absolute left-1/2 top-0 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-border to-transparent" />
 
       <div className="max-w-4xl mx-auto relative" ref={ref}>
         {/* Section header */}
@@ -102,17 +102,17 @@ export default function Experience() {
           className="flex items-center gap-3 mb-4"
         >
           <span className="font-mono text-[#4f72ff] text-sm">03.</span>
-          <span className="text-sm font-medium text-[#4a5568] uppercase tracking-widest">
+          <span className="text-sm font-medium text-text-muted uppercase tracking-widest">
             Experience
           </span>
-          <div className="flex-1 h-px bg-gradient-to-r from-[#1e2235] to-transparent" />
+          <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
         </motion.div>
 
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="section-heading text-white mb-16"
+          className="section-heading text-text-primary mb-16"
         >
           My <span className="gradient-text">Journey</span>
         </motion.h2>
@@ -172,15 +172,15 @@ export default function Experience() {
                       </div>
 
                       {/* Title & Company */}
-                      <h3 className="text-base font-bold text-[#e2e8f0] leading-tight">
+                      <h3 className="text-base font-bold text-text-primary leading-tight">
                         {item.title}
                       </h3>
-                      <p className="text-sm text-[#4a5568] font-medium mb-3">
+                      <p className="text-sm text-text-muted font-medium mb-3">
                         {item.company}
                       </p>
 
                       {/* Description */}
-                      <p className="text-sm text-[#8892a4] leading-relaxed mb-4">
+                      <p className="text-sm text-text-secondary leading-relaxed mb-4">
                         {item.description}
                       </p>
 

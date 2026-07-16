@@ -4,11 +4,9 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   Mail,
-  Globe,
   Link as LinkIcon,
   Send,
   MapPin,
-  Clock,
   Phone,
   CheckCircle2,
   AlertCircle,
@@ -52,7 +50,7 @@ export default function Contact() {
     e.preventDefault();
     setFormState("loading");
 
-    // Simulate send — replace with your API call
+    // Simulate send
     await new Promise((r) => setTimeout(r, 1500));
     setFormState("success");
     setForm({ name: "", email: "", message: "" });
@@ -61,7 +59,7 @@ export default function Contact() {
   return (
     <section id="contact" className="py-24 px-6 relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0f1120]/60 to-[#090b13]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-surface/60 to-background" />
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#4f72ff]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative" ref={ref}>
@@ -73,17 +71,17 @@ export default function Contact() {
           className="flex items-center gap-3 mb-4"
         >
           <span className="font-mono text-[#4f72ff] text-sm">04.</span>
-          <span className="text-sm font-medium text-[#4a5568] uppercase tracking-widest">
+          <span className="text-sm font-medium text-text-muted uppercase tracking-widest">
             Contact
           </span>
-          <div className="flex-1 h-px bg-gradient-to-r from-[#1e2235] to-transparent" />
+          <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
         </motion.div>
 
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="section-heading text-white mb-4"
+          className="section-heading text-text-primary mb-4"
         >
           Let&apos;s <span className="gradient-text">Work Together</span>
         </motion.h2>
@@ -92,7 +90,7 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-[#8892a4] max-w-xl mb-14"
+          className="text-text-secondary max-w-xl mb-14"
         >
           Whether you have a project in mind, a job opportunity, or just want to
           say hi — my inbox is always open. I&apos;ll get back to you as soon
@@ -113,10 +111,10 @@ export default function Contact() {
                 <Mail size={18} />
               </div>
               <div>
-                <p className="text-xs text-[#4a5568] font-medium uppercase tracking-wider mb-1">Email</p>
+                <p className="text-xs text-text-muted font-medium uppercase tracking-wider mb-1">Email</p>
                 <a
                   href="mailto:robasowen@gmail.com"
-                  className="text-[#e2e8f0] hover:text-[#4f72ff] transition-colors font-medium"
+                  className="text-text-primary hover:text-[#4f72ff] transition-colors font-medium"
                 >
                   robasowen@gmail.com
                 </a>
@@ -128,9 +126,9 @@ export default function Contact() {
                 <MapPin size={18} />
               </div>
               <div>
-                <p className="text-xs text-[#4a5568] font-medium uppercase tracking-wider mb-1">Location</p>
-                <p className="text-[#e2e8f0] font-medium">Bagumbayan Sur, Naga City, PH 🇵🇭</p>
-                <p className="text-xs text-[#4a5568] mt-0.5">Open to local and remote opportunities</p>
+                <p className="text-xs text-text-muted font-medium uppercase tracking-wider mb-1">Location</p>
+                <p className="text-text-primary font-medium">Bagumbayan Sur, Naga City, PH 🇵🇭</p>
+                <p className="text-xs text-text-muted mt-0.5">Open to local and remote opportunities</p>
               </div>
             </div>
 
@@ -139,20 +137,20 @@ export default function Contact() {
                 <Phone size={18} />
               </div>
               <div>
-                <p className="text-xs text-[#4a5568] font-medium uppercase tracking-wider mb-1">Phone</p>
+                <p className="text-xs text-text-muted font-medium uppercase tracking-wider mb-1">Phone</p>
                 <a
                   href="tel:+639102972392"
-                  className="text-[#e2e8f0] hover:text-[#f59e0b] transition-colors font-medium"
+                  className="text-text-primary hover:text-[#f59e0b] transition-colors font-medium"
                 >
                   0910-297-2392
                 </a>
-                <p className="text-xs text-[#4a5568] mt-0.5">Available for calls and messages</p>
+                <p className="text-xs text-text-muted mt-0.5">Available for calls and messages</p>
               </div>
             </div>
 
             {/* Social links */}
             <div className="glass-card rounded-2xl p-6">
-              <p className="text-xs text-[#4a5568] font-medium uppercase tracking-wider mb-4">
+              <p className="text-xs text-text-muted font-medium uppercase tracking-wider mb-4">
                 Find me on
               </p>
               <div className="flex items-center gap-4">
@@ -166,7 +164,7 @@ export default function Contact() {
                       rel="noopener noreferrer"
                       id={`social-${social.label.toLowerCase().replace("/", "-")}`}
                       title={social.label}
-                      className={`w-10 h-10 rounded-xl glass flex items-center justify-center text-[#4a5568] ${social.hoverColor} hover:bg-white/5 transition-all hover:scale-110`}
+                      className="w-10 h-10 rounded-xl glass flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-2 transition-all hover:scale-110"
                     >
                       <Icon size={18} />
                     </a>
@@ -183,7 +181,7 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <div className="glass-card rounded-2xl p-8">
-              <h3 className="text-lg font-bold text-[#e2e8f0] mb-6">
+              <h3 className="text-lg font-bold text-text-primary mb-6">
                 Send a Message
               </h3>
 
@@ -196,10 +194,10 @@ export default function Contact() {
                   <div className="w-16 h-16 rounded-full bg-[#10b981]/10 flex items-center justify-center">
                     <CheckCircle2 size={32} className="text-[#10b981]" />
                   </div>
-                  <h4 className="text-lg font-semibold text-[#e2e8f0]">
+                  <h4 className="text-lg font-semibold text-text-primary">
                     Message Sent!
                   </h4>
-                  <p className="text-sm text-[#4a5568]">
+                  <p className="text-sm text-text-muted">
                     Thanks for reaching out. I&apos;ll get back to you soon.
                   </p>
                   <button
@@ -215,7 +213,7 @@ export default function Contact() {
                     <div>
                       <label
                         htmlFor="contact-name"
-                        className="block text-xs font-medium text-[#8892a4] mb-2 uppercase tracking-wider"
+                        className="block text-xs font-medium text-text-secondary mb-2 uppercase tracking-wider"
                       >
                         Name
                       </label>
@@ -228,13 +226,13 @@ export default function Contact() {
                           setForm((f) => ({ ...f, name: e.target.value }))
                         }
                         placeholder="Your Name"
-                        className="w-full px-4 py-3 rounded-xl bg-[#090b13]/80 border border-[#1e2235] text-[#e2e8f0] placeholder-[#4a5568] text-sm focus:outline-none focus:border-[#4f72ff]/50 focus:ring-1 focus:ring-[#4f72ff]/30 transition-all"
+                        className="w-full px-4 py-3 rounded-xl bg-background/80 border border-border text-text-primary placeholder-text-muted text-sm focus:outline-none focus:border-[#4f72ff]/50 focus:ring-1 focus:ring-[#4f72ff]/30 transition-all"
                       />
                     </div>
                     <div>
                       <label
                         htmlFor="contact-email"
-                        className="block text-xs font-medium text-[#8892a4] mb-2 uppercase tracking-wider"
+                        className="block text-xs font-medium text-text-secondary mb-2 uppercase tracking-wider"
                       >
                         Email
                       </label>
@@ -247,7 +245,7 @@ export default function Contact() {
                           setForm((f) => ({ ...f, email: e.target.value }))
                         }
                         placeholder="robasowen@gmail.com"
-                        className="w-full px-4 py-3 rounded-xl bg-[#090b13]/80 border border-[#1e2235] text-[#e2e8f0] placeholder-[#4a5568] text-sm focus:outline-none focus:border-[#4f72ff]/50 focus:ring-1 focus:ring-[#4f72ff]/30 transition-all"
+                        className="w-full px-4 py-3 rounded-xl bg-background/80 border border-border text-text-primary placeholder-text-muted text-sm focus:outline-none focus:border-[#4f72ff]/50 focus:ring-1 focus:ring-[#4f72ff]/30 transition-all"
                       />
                     </div>
                   </div>
@@ -255,7 +253,7 @@ export default function Contact() {
                   <div>
                     <label
                       htmlFor="contact-message"
-                      className="block text-xs font-medium text-[#8892a4] mb-2 uppercase tracking-wider"
+                      className="block text-xs font-medium text-text-secondary mb-2 uppercase tracking-wider"
                     >
                       Message
                     </label>
@@ -268,7 +266,7 @@ export default function Contact() {
                         setForm((f) => ({ ...f, message: e.target.value }))
                       }
                       placeholder="Tell me about your project or opportunity..."
-                      className="w-full px-4 py-3 rounded-xl bg-[#090b13]/80 border border-[#1e2235] text-[#e2e8f0] placeholder-[#4a5568] text-sm focus:outline-none focus:border-[#4f72ff]/50 focus:ring-1 focus:ring-[#4f72ff]/30 transition-all resize-none"
+                      className="w-full px-4 py-3 rounded-xl bg-background/80 border border-border text-text-primary placeholder-text-muted text-sm focus:outline-none focus:border-[#4f72ff]/50 focus:ring-1 focus:ring-[#4f72ff]/30 transition-all resize-none"
                     />
                   </div>
 
