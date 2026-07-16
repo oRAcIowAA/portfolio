@@ -69,29 +69,15 @@ const STATIC_PROJECTS: GitHubRepo[] = [
     created_at: "2023-11-20T12:00:00Z",
     open_issues_count: 0,
     visibility: "public",
-    paperUrl: "/Jumpquest game paper.pdf"
-  },
-  {
-    id: 4,
-    name: "ssc-automated-email-sender",
-    full_name: "oRAcIowAA/ssc-automated-email-sender",
-    description: "Automated Email Sender System built for Supreme Student Council members. Automates broadcasting of meeting invitations, announcements, and newsletters to student mailing lists.",
-    html_url: "https://github.com/oRAcIowAA/ssc-automated-email-sender",
-    homepage: null,
-    language: "PHP",
-    stargazers_count: 6,
-    forks_count: 1,
-    topics: ["PHP", "PHPMailer", "MySQL", "Email Automation", "Utility Tool"],
-    fork: false,
-    updated_at: "2024-07-01T14:20:00Z",
-    created_at: "2024-07-01T14:20:00Z",
-    open_issues_count: 0,
-    visibility: "public",
+    paperUrl: "/Jumpquest game paper.pdf",
     screenshots: [
-      "/ssc-screenshots/photo_2026-07-16_02-40-26.jpg",
-      "/ssc-screenshots/photo_2026-07-16_02-40-39.jpg",
-      "/ssc-screenshots/photo_2026-07-16_02-40-51.jpg",
-      "/ssc-screenshots/photo_2026-07-16_02-41-05.jpg"
+      "/jumpquest-screenshots/Screenshot 2025-11-25 132537.png",
+      "/jumpquest-screenshots/Screenshot 2025-11-25 132544.png",
+      "/jumpquest-screenshots/Screenshot 2025-11-25 132628.png",
+      "/jumpquest-screenshots/Screenshot 2025-11-25 132635.png",
+      "/jumpquest-screenshots/Screenshot 2025-11-25 132641.png",
+      "/jumpquest-screenshots/Screenshot 2025-11-25 132734.png",
+      "/jumpquest-screenshots/Screenshot 2025-11-25 132756.png"
     ]
   }
 ];
