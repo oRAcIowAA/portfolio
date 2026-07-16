@@ -75,8 +75,15 @@ body {
 }
 
 /* Smooth Transitions for Theme Swapping */
-body, header, footer, nav, section, div, p, span, a, h1, h2, h3, h4, h5, h6, input, textarea, button, svg {
+body, header, footer, nav, section, div, p, span, a, h1, h2, h3, h4, h5, h6, input, textarea, svg {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
+}
+
+/* Buttons: explicit transitions only + fix 300ms mobile tap delay */
+button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
 /* ─── Scrollbar ───────────────────────────────────────────────────────── */
