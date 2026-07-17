@@ -52,12 +52,21 @@ export default function IntroSequence() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const prefersReduced = useReducedMotion();
 
+  const [videoSrc, setVideoSrc] = useState<string>("/intro-pc.mp4");
+
   // ── Initialise on mount (client-only) ─────────────────────────────────────
   useEffect(() => {
     const seen = sessionStorage.getItem(SESSION_KEY);
     if (seen || prefersReduced) {
       setStage("done");
       return;
+    }
+
+    // Set initial video src based on screen width
+    if (window.innerWidth < 768) {
+      setVideoSrc("/intro-mobile.mp4");
+    } else {
+      setVideoSrc("/intro-pc.mp4");
     }
 
     const hour = new Date().getHours();
@@ -116,7 +125,7 @@ export default function IntroSequence() {
             {/* Video — object-contain on mobile, cover on desktop */}
             <video
               ref={videoRef}
-              src="/intro.mp4"
+              src={videoSrc}
               autoPlay
               muted
               playsInline
