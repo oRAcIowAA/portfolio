@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import IntroSequence from "@/components/IntroSequence";
 
 export const metadata: Metadata = {
   title: "Owen Christian T. Robas | Full-Stack Developer & IT Engineer",
@@ -60,7 +61,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <IntroSequence />
+        {children}
+      </body>
     </html>
   );
 }

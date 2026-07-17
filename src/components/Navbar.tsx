@@ -18,6 +18,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [mounted, setMounted] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
 
   // Prevent double-fire on touch devices — track last toggle time
   const lastToggleRef = useRef(0);
@@ -60,12 +61,37 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close menu on outside click / scroll
+  // Close menu on: Click Outside, Escape key, or window Resize
   useEffect(() => {
     if (!isOpen) return;
-    const close = () => setIsOpen(false);
-    window.addEventListener("scroll", close, { passive: true, once: true });
-    return () => window.removeEventListener("scroll", close);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("resize", handleResize);
+    };
   }, [isOpen]);
 
   const scrollToSection = (
@@ -87,16 +113,14 @@ export default function Navbar() {
   };
 
   return (
-    // Use a plain <nav> — NOT motion.nav — so fixed positioning + z-index
-    // are never affected by Framer Motion's transform compositing layer.
     <nav
+      ref={navRef}
       className={`fixed top-0 left-0 right-0 z-[9999] transition-colors duration-300 ${
         scrolled
           ? "bg-[var(--glass-bg)] backdrop-blur-[16px] border-b border-[var(--glass-border)] shadow-lg"
           : "bg-transparent border-b border-transparent"
       }`}
     >
-      {/* Slide-in animation on an inner wrapper, not the fixed element */}
       <motion.div
         initial={{ y: -80, opacity: 0 }}
         animate={mounted ? { y: 0, opacity: 1 } : { y: -80, opacity: 0 }}
@@ -113,7 +137,7 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop Links */}
+          {/* Desktop Links (>= 768px) */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <a
@@ -131,9 +155,12 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Right-side controls */}
+          {/* Controls */}
           <div className="flex items-center gap-3">
-            <ThemeToggle />
+            {/* Desktop ThemeToggle */}
+            <div className="hidden md:block">
+              <ThemeToggle />
+            </div>
 
             {/* Desktop CTA */}
             <div className="hidden md:block">
@@ -147,7 +174,7 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* ── Mobile Hamburger ── */}
+            {/* Mobile Hamburger Button (< 768px) */}
             <button
               id="mobile-menu-toggle"
               type="button"
@@ -160,7 +187,6 @@ export default function Navbar() {
                 touchAction: "manipulation",
                 WebkitTapHighlightColor: "transparent",
                 cursor: "pointer",
-                // Ensure nothing can overlap this button
                 position: "relative",
                 zIndex: 9999,
               }}
@@ -171,7 +197,7 @@ export default function Navbar() {
         </div>
       </motion.div>
 
-      {/* ── Mobile Dropdown Menu ── */}
+      {/* Mobile Dropdown Menu */}
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
@@ -199,6 +225,14 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
+
+              {/* Mobile Theme Toggle integration */}
+              <div className="flex items-center justify-between px-4 py-2 border-t border-[var(--border-color)] mt-2 pt-4">
+                <span className="text-sm font-medium text-text-secondary">Switch Theme</span>
+                <ThemeToggle />
+              </div>
+
+              {/* Mobile CTA */}
               <a
                 href="#contact"
                 onClick={(e) => scrollToSection(e, "#contact")}

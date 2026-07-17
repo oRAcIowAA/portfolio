@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import ScrollLaptop from "@/components/ScrollLaptop";
 import About from "@/components/About";
 import GitHubProjects from "@/components/GitHubProjects";
 import Experience from "@/components/Experience";
@@ -50,6 +51,12 @@ export default function Home() {
 
       {/* Hero */}
       <Hero />
+
+      {/* Divider */}
+      <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
+      {/* Scroll Laptop Centrepiece */}
+      <ScrollLaptop />
 
       {/* Divider */}
       <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />

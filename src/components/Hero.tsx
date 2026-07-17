@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, Download, ChevronRight, Sparkles } from "lucide-react";
+import { ArrowDown, Download, ChevronRight } from "lucide-react";
+import GreetingBadge from "@/components/GreetingBadge";
 
 // Particle type
 interface Particle {
@@ -210,16 +211,10 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-16">
         <div className="max-w-3xl">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-[#4f72ff]/20 text-sm text-[#4f72ff] font-medium mb-8"
-          >
-            <Sparkles size={14} className="animate-pulse" />
-            <span>Available for opportunities</span>
-          </motion.div>
+          {/* Time-aware greeting badge */}
+          <div className="mb-8">
+            <GreetingBadge />
+          </div>
 
           {/* Headline */}
           <motion.h1
