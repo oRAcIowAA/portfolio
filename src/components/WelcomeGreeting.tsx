@@ -9,7 +9,7 @@ type TimeSlot = "morning" | "afternoon" | "evening";
 interface GreetingConfig {
   title: string;
   subtitle: string;
-  icon: React.ElementType;
+  icon: React.ComponentType<any>;
   color: string;
 }
 

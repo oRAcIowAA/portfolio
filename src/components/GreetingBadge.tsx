@@ -26,7 +26,7 @@ function getGreeting(hour: number): Greeting {
 }
 
 // Icon mapped to time slot
-const SlotIcon: Record<TimeSlot, React.ElementType> = {
+const SlotIcon: Record<TimeSlot, React.ComponentType<any>> = {
   morning:   Sunrise,
   afternoon: Sun,
   evening:   Sunset,

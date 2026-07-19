@@ -1,9 +1,12 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, useInView, useScroll, useMotionValueEvent } from "framer-motion";
+import { useRef, useState } from "react";
 import { Briefcase, GraduationCap, Trophy, Calendar } from "lucide-react";
+import dynamic from "next/dynamic";
 import type { TimelineItem } from "@/types";
+
+const ExperienceCanvas = dynamic(() => import("./ExperienceCanvas"), { ssr: false });
 
 const timelineData: TimelineItem[] = [
   {
@@ -84,16 +87,36 @@ const typeConfig = {
 };
 
 export default function Experience() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef(null);
+  const isInView = useInView(contentRef, { once: true, margin: "-100px" });
+
+  const [hoveredType, setHoveredType] = useState<"work" | "education" | "achievement" | null>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const scrollValRef = useRef(0);
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    scrollValRef.current = v;
+  });
 
   return (
-    <section id="experience" className="py-24 px-6 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-surface/40" />
-      <div className="absolute left-1/2 top-0 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-border to-transparent" />
+    <section
+      id="experience"
+      ref={sectionRef}
+      className="py-24 px-6 relative overflow-hidden"
+    >
+      {/* Ambient 3D canvas backdrop */}
+      <ExperienceCanvas hoveredType={hoveredType} scrollValRef={scrollValRef} />
 
-      <div className="max-w-4xl mx-auto relative" ref={ref}>
+      {/* Background */}
+      <div className="absolute inset-0 bg-surface/40 z-0 pointer-events-none" />
+      <div className="absolute left-1/2 top-0 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-border to-transparent z-0 pointer-events-none" />
+
+      <div className="max-w-4xl mx-auto relative z-10" ref={contentRef}>
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -153,7 +176,11 @@ export default function Experience() {
                       isEven ? "md:pr-8 md:text-right" : "md:pl-8 md:ml-[55%]"
                     }`}
                   >
-                    <div className="glass-card rounded-2xl p-5 group">
+                    <div
+                      className="glass-card rounded-2xl p-5 group transition-all duration-300 hover:border-purple-500/40 cursor-pointer"
+                      onMouseEnter={() => setHoveredType(item.type)}
+                      onMouseLeave={() => setHoveredType(null)}
+                    >
                       {/* Date */}
                       <div
                         className={`flex items-center gap-1.5 mb-2 ${
