@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useRef, useMemo, useEffect } from "react";
-import { useFrame, useLoader, useThree } from "@react-three/fiber";
+import { useLoader, useFrame, useThree } from "@react-three/fiber";
+
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
+import { useDevice } from "@/hooks/useDevice";
 import * as THREE from "three";
 
 interface WebGLLaptopProps {
@@ -62,6 +64,7 @@ export default function WebGLLaptop({ scrollValRef }: WebGLLaptopProps) {
   const entranceProgress = useRef(0);
   const groupRef = useRef<THREE.Group>(null);
   const { camera, gl } = useThree();
+  const { isMobile } = useDevice();
 
   // ── Drag-to-rotate state ──────────────────────────────────────────────────
   const isDragging = useRef(false);
@@ -74,12 +77,11 @@ export default function WebGLLaptop({ scrollValRef }: WebGLLaptopProps) {
     const el = gl.domElement.parentElement;
     if (!el) return;
 
-    // CRITICAL: tell the browser not to scroll the page on touch/drag
-    el.style.touchAction = "none";
+    // Set touch action to pan-y to support vertical scroll while capturing horizontal drag
+    el.style.touchAction = "pan-y";
     el.style.cursor = "grab";
 
     const onPointerDown = (e: PointerEvent) => {
-      e.preventDefault();            // stop page scroll from stealing the drag
       isDragging.current = true;
       lastPointerX.current = e.clientX;
       dragVelocity.current = 0;
@@ -89,11 +91,12 @@ export default function WebGLLaptop({ scrollValRef }: WebGLLaptopProps) {
 
     const onPointerMove = (e: PointerEvent) => {
       if (!isDragging.current) return;
-      e.preventDefault();
       const dx = e.clientX - lastPointerX.current;
       lastPointerX.current = e.clientX;
-      dragRotY.current += dx * 0.012;
-      dragVelocity.current = dx * 0.012;
+
+      // Limit accumulated drag rotation to 90 degrees left/right
+      dragRotY.current = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, dragRotY.current + dx * 0.008));
+      dragVelocity.current = dx * 0.008;
     };
 
     const onPointerUp = (e: PointerEvent) => {
@@ -104,9 +107,8 @@ export default function WebGLLaptop({ scrollValRef }: WebGLLaptopProps) {
       } catch (err) { }
     };
 
-    // passive:false is REQUIRED for preventDefault() to work on touch devices
-    el.addEventListener("pointerdown", onPointerDown, { passive: false });
-    el.addEventListener("pointermove", onPointerMove, { passive: false });
+    el.addEventListener("pointerdown", onPointerDown);
+    el.addEventListener("pointermove", onPointerMove);
     el.addEventListener("pointerup", onPointerUp);
     el.addEventListener("pointercancel", onPointerUp);
 
@@ -169,6 +171,8 @@ export default function WebGLLaptop({ scrollValRef }: WebGLLaptopProps) {
     }));
   }, []);
 
+
+
   // ---------------------------------------------------------------------------
   // Animation loop — camera orbit + drag-to-rotate + entrance easing
   // ---------------------------------------------------------------------------
@@ -181,18 +185,19 @@ export default function WebGLLaptop({ scrollValRef }: WebGLLaptopProps) {
     const scrollVal = scrollValRef.current ?? 0;
     const elapsed = state.clock.getElapsedTime();
 
-    // 2. Inertia: decay velocity when pointer is released
+    // 2. Inertia: decay velocity when pointer is released, keeping within limits
     if (!isDragging.current && Math.abs(dragVelocity.current) > 0.0001) {
-      dragRotY.current += dragVelocity.current;
+      dragRotY.current = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, dragRotY.current + dragVelocity.current));
       dragVelocity.current *= 0.92; // friction / damping
     }
 
     // 3. Camera orbit — idle auto-rotation + drag offset + scroll sweep
-    const idleAngle = elapsed * 0.15;       // continuous slow orbit
-    const scrollAngle = scrollVal * Math.PI;  // scroll sweeps camera around
+    const idleAngle = Math.sin(elapsed * 0.4) * 0.12;       // gentle side-to-side idle swing
+    const scrollAngle = (scrollVal - 0.5) * 0.5;  // scroll sweeps camera slightly left/right
     const finalAngle = idleAngle + dragRotY.current + scrollAngle;
 
-    const targetRadius = 5.5 + 2.0 * Math.pow(scrollVal - 0.5, 2) * 4;
+    const baseRadius = isMobile ? 8.5 : 5.5;
+    const targetRadius = baseRadius + 2.0 * Math.pow(scrollVal - 0.5, 2) * 4;
     const targetY = 0.8 + Math.sin(scrollVal * Math.PI) * 1.2;
 
     const targetPos = new THREE.Vector3(
@@ -219,6 +224,8 @@ export default function WebGLLaptop({ scrollValRef }: WebGLLaptopProps) {
     <group ref={groupRef} position={[0, -0.3, 0]}>
       {/* ── Real OBJ laptop model ── */}
       <primitive object={laptopScene} />
+
+
 
       {/* Orbiting brand particles */}
       <OrbitingParticles particles={particles} />

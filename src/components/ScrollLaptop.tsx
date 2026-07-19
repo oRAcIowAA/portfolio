@@ -21,7 +21,7 @@ export default function ScrollLaptop() {
 
   // Track scroll value in a ref for fast, non-rerendering WebGL useFrame access
   const scrollValRef = useRef(0);
-  
+
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     scrollValRef.current = v;
   });
@@ -48,8 +48,8 @@ export default function ScrollLaptop() {
       ref={containerRef}
       className="relative h-[420px] w-full flex items-center justify-center overflow-hidden"
     >
-      {/* ── Desktop WebGL 3D Canvas Scene ── */}
-      {isMounted && !isMobile && hasWebgl ? (
+      {/* ── WebGL 3D Canvas Scene (Desktop & Mobile) ── */}
+      {isMounted && hasWebgl ? (
         <div className="absolute inset-0 w-full h-full">
           <SceneCanvas>
             <WebGLLaptop scrollValRef={scrollValRef} />
